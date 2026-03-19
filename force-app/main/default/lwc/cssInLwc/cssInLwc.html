@@ -1,0 +1,74 @@
+<template>
+    <!--In Line Css-->
+    <lightning-card title="In-Line CSS">
+        <div class="slds-m-around_medium">
+            <p style="color: red; font-size: 30px;">Hi I am First Div Tag</p>
+            <p>Hello I am Paragraph</p>
+        </div>
+        
+    </lightning-card>
+
+    <!--External CSS for this we will create a css file in the same folder with same comp name -->
+     <lightning-card title="External CSS">
+        <div class="slds-m-around_medium">
+            <p>Hi I am Second Div Tag</p>
+            <p class="demo">Hello I am Second Paragraph</p>
+        </div>
+        
+    </lightning-card>
+
+    <lightning-card title="SLDS Demo">
+        <div class="slds-m-around_medium">
+            <div class="slds-box">
+            <h3>This is a regular-sized box.</h3>
+            </div>
+            <span class="slds-badge slds-m-top_small">Label</span>
+            <span class="slds-badge slds-theme_success slds-m-top_small">Success Label</span>
+            <div class="slds-text-color_success">The quick brown fox jumps over the lazy dog.</div>
+            
+        </div>
+        
+    </lightning-card>
+    <lightning-card title="Grid">
+        <div class="slds-m-around_medium">
+            <div class="slds-grid slds-gutters">
+            <div class="slds-col slds-size_8-of-12"><span>Hello</span></div>
+            <div class="slds-col slds-size_4-of-12"><span>World</span></div>
+        </div>
+        </div>
+    </lightning-card>
+
+
+    <lightning-card>
+        <div class="slds-brand-band slds-brand-band_medium slds-brand-band_group"></div>
+    </lightning-card>
+    
+    <lightning-card title="Design Token">
+        <div class="slds-m-around_medium">
+           <h3 class="abc">Hi I am Design Token.</h3> 
+        </div>
+    </lightning-card>
+
+    <!--Dynamic Css-->
+    <lightning-card title="Dynamic Css">
+        <div class="slds-m-around_medium">
+            <lightning-input type="number" label="Enter the number" value={number}
+            onkeyup={handleChange}></lightning-input>
+            
+            <!--div style={percentage}-->
+            <div class="slds-notify slds-notify_alert slds-theme_alert-texture
+            slds-theme_error slds-m-top_small" role="alert">
+            Hey I am an alert!!!.
+            <!--/div-->
+            </div>
+        </div>
+
+    </lightning-card>
+
+    <lightning-card title="Styling Across Shadow Dom">
+        <div class="slds-m-around_medium btn">
+            <lightning-button label="Click Me" title="Click Me"></lightning-button>
+        </div>
+    </lightning-card>
+
+</template>

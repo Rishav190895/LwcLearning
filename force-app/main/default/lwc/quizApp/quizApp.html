@@ -1,0 +1,51 @@
+<template>
+    <form>
+    <lightning-card title="Quiz App">
+        <div class="slds-m-around_medium">
+            <div class={isScoredFull}>
+            <template if:true={result}>
+                You Have Scored {answer} Out Of {quizQuestion.length}.
+            </template>
+            <template if:false={result}>
+                
+            </template>
+               </div>
+            <template for:each={quizQuestion} for:item="quiz">
+               <div key={quiz.id}>
+                 <div> <strong>Question {quiz.id}:  {quiz.question} </strong>
+                 <div class="slds-grid slds-grid_vertical slds-p-bottom_medium">            
+                    <div class="slds-col">
+                        <input type="radio" name={quiz.id} value={quiz.options.a} onchange={handleChange} />
+                        {quiz.options.a}</div>
+                    <div class="slds-col">
+                        <input type="radio" name={quiz.id} value={quiz.options.b} onchange={handleChange}/>
+                        {quiz.options.b}</div>
+                    <div class="slds-col">
+                        <input type="radio" name={quiz.id} value={quiz.options.c} onchange={handleChange} />
+                        {quiz.options.c}</div>
+                    </div>
+                </div>
+               </div>
+              
+
+            </template>
+        </div>
+        <lightning-button 
+        variant="brand"
+        label="Submit"
+        title="Submit Quiz"
+        onclick={submitClick}
+        type="submit"
+        disabled={isSubmitDisabled}
+        class="slds-m-left_x-small">
+        </lightning-button>
+
+        <lightning-button variant="brand" 
+        label="Reset" title="Reset Quiz" 
+        type="reset"
+        onclick={resetClick} 
+        class="slds-m-left_x-small"></lightning-button>
+
+    </lightning-card>
+    </form>
+</template>

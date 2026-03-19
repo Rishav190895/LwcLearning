@@ -1,0 +1,135 @@
+                <template>
+                <div>Hello World</div>
+                <div>
+                <!--One way binding-->
+                My Full Name is {fullName}
+                </div>
+                {obj.place}
+                <!-- Things to remember
+                In template we can access property value directly if it is primitive or object
+                Dot notation is used to access the property of object -->
+
+                <!--For two way binding we need method-->
+                <lightning-card  title="Two Way Binding">
+                    <div class="slds-m-around_large">
+                    <lightning-input type="text" label="Enter some text" 
+                    onkeyup={handleChange}></lightning-input>
+                    <p>
+                        {topic} is the Course of {title}
+                    </p>
+                </div>
+                </lightning-card>
+
+            <!-- @track properties-->
+                <lightning-card  title="track Properties using object">
+                    <div class="slds-m-around_large">
+                    <lightning-input type="text" label="Enter some city" 
+                    onkeyup={handleTrack}></lightning-input>
+                    <p>
+                        {address.city} is my city
+                        
+                    </p>
+                </div>
+                </lightning-card>
+
+                <lightning-card  title="track Properties using array">
+                    <div class="slds-m-around_large">
+                    <lightning-input type="text" label="Enter Data" 
+                    onkeyup={handleTrack1}></lightning-input>
+                    <p>
+                        {userlist1} is now my updated array
+                        
+                    </p>
+                </div>
+                </lightning-card>
+
+                <!--Getter and its use-->
+                <div>
+                    Sum of Two Number is :{sumOfNumber}
+                </div>
+                <p>
+                Name: {funData}
+                </p>
+
+                <!--Conditional Rendering-->
+                <lightning-card title="Conditional Rendering">
+                    <div class="slds-m-around_large">
+                        <lightning-button variant="brand" 
+                        label="Click Here" title="Click Here"
+                        onclick={handleClick}></lightning-button>
+                        </div>
+                        <template if:true={isVisible}>
+                         <div>
+                            <h3>Hello welcome to zero to hero page</h3>
+                        </div>
+                        </template>
+                        <template if:false={isVisible}>
+                            <h3>Please click on the Button</h3>
+                        </template>
+
+                        <lightning-input type="text" label="Enter some text"
+                        onkeyup={handleData}></lightning-input>
+                        <div>
+                            <template if:true={matchData}>
+                                  <h3>Hurray You have matched with Data</h3>
+                            </template>
+                           
+                        </div>
+                          </lightning-card>
+
+                       <!--Template Looping for:each-->
+
+                       <lightning-card title="For Each Loop">
+                        <div class="slds-m-around-medium">
+                            <template for:each ={carlist} for:item="car">
+                                <ul key={car} class="slds-has-dividers_around-space">
+                                <li class="slds-item">{car}</li>
+                                </ul>
+                            </template>
+                        </div>
+                       </lightning-card>
+
+                       <lightning-card title="For Each Loop with array of Object">
+                        <div class="slds-m-around-medium">
+                            <ul>
+                            <template for:each ={bikeList} for:item="bike">
+                                <div key={bike.id} class="slds-has-dividers_around-space">
+                                <li class="slds-item">Name :{bike.name} Price: {bike.price}</li>
+                                </div>
+                            </template>
+                            </ul>
+                        </div>
+                        
+                       </lightning-card>
+
+                        <!--Template Looping iterator-->
+
+                        <lightning-card title="Iterator loop">
+                            <div class="slds-m-around-medium">
+                                <ul class="slds-has-dividers_around-space">
+                                <template iterator:it={ceoList}>
+                                    <div key={it.value.id}>
+                                        <template if:true={it.first}>
+                                            <h3>CEO LIST</h3> 
+                                        </template>
+                                        <li>Name: {it.value.name}
+                                            Company : {it.value.company}
+                                            Salary : {it.value.salary}</li>
+                                            <template if:true={it.last}>
+                                            <h3>Thanks And Regards</h3> 
+                                        </template>
+
+                                    </div>
+
+                                </template>
+                                </ul>
+
+                            </div>
+                        </lightning-card>
+                    
+    
+
+                </template>
+
+
+

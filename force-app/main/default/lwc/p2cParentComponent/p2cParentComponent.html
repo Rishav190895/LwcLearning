@@ -1,0 +1,33 @@
+<template>
+     <c-p2c-alert-component
+     message="Hurray!! I got the data."
+     data="Parent to Child Communication using Primitive DataType.."
+     is-valid
+     number=30
+     ></c-p2c-alert-component>
+
+<!-- -->
+    <c-p2c-carousel-component  carousel ={carouselDetails} ></c-p2c-carousel-component>
+
+<!---->
+    <lightning-card title="Parent to child using Action">
+        <div class="slds-m-bottom_medium slds-m-around_medium">
+           <lightning-input type="number" 
+           label="Enter Number"
+           value={percentage}
+           onkeyup={changeHandle}>
+        </lightning-input>
+        <c-p2c-progress-component
+        percentage-value={percentage}>
+    </c-p2c-progress-component>
+        </div>
+    </lightning-card>
+
+    <!---->
+     <lightning-button variant="brand"
+      label="Reset" onclick={handleClick}>
+    </lightning-button>
+
+    <c-p2c-slider-component></c-p2c-slider-component>
+     
+</template>

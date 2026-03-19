@@ -1,0 +1,48 @@
+<template>
+<lightning-card title="Filtering Data">
+    <div class="slds-m-around_medium">
+
+        <lightning-layout class="slds-m-bottom_small">
+                <lightning-layout-item size="2" padding="around-small">
+            <lightning-combobox name="filterBy" label="Filter By" value={filterBy}
+                options={filterbyOptions} onchange={filterByHandler}></lightning-combobox>
+                </lightning-layout-item>
+
+            <lightning-layout-item size="4" padding="around-small">
+                <lightning-input label="Filter" 
+                type="search"
+                placeholder="Search contacts..." 
+                onkeyup={handleChange}></lightning-input>
+            </lightning-layout-item>
+
+             <lightning-layout-item size="2" alignment-bump="left" padding="around-small">
+            <lightning-combobox name="sortedBy" label="Sort By" value={sortedBy}
+                options={sortedbyOptions} onchange={sortedByHandler}></lightning-combobox>
+                </lightning-layout-item>
+
+        </lightning-layout>
+        <table>
+            <thead>
+                <tr>
+                    <template for:each={headings} for:item="heading">
+                            <th key={heading}>{heading}</th>
+                    </template>
+                    
+                </tr>
+            </thead>
+            <tbody>
+                    <template for:each={filteringData} for:item="data">
+                        <tr key={data.Id}>
+                            <td>{data.Id}</td>
+                            <td>{data.Name}</td>
+                            <td>{data.Title}</td>
+                            <td>{data.Email}</td>
+                            </tr>
+                    </template>
+                    
+                
+            </tbody>
+        </table>
+    </div>
+</lightning-card>
+</template>

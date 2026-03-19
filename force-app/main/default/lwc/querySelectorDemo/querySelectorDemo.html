@@ -1,0 +1,20 @@
+<template>
+    <lightning-card title="Query Selector">
+        <div class="slds-m-around_medium">
+        <div>
+            <h2>Hello I M First Selector</h2>
+        </div>
+        <div>
+            <template for:each={carList} for:item="car">
+                <h3 class="demo" key={car}>{car}</h3>
+
+            </template>
+
+        </div>
+        <div class="child" lwc:dom="manual"></div>
+
+            <button onclick={handleClick}>Click Me </button>
+       
+        </div>
+    </lightning-card>
+</template>

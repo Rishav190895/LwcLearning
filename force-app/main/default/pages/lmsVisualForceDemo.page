@@ -1,0 +1,64 @@
+<apex:page lightningStylesheets="true">
+    <apex:slds />
+
+    <div class="slds-scope">
+        <div class="slds-m-around_medium">
+            <label class="slds-form-element__label">Enter Message</label>
+            <input type="text" class="slds-input" id="messageField"/>
+        </div>
+
+        <div class="slds-m-around_medium">
+            <button class="slds-button slds-button_brand" onclick="publishHandler()">Publish</button>
+            <button class="slds-button slds-button_neutral" onclick="subscribeHandler()">Subscribe</button>
+            <button class="slds-button slds-button_destructive" onclick="unsubscribeHandler()">Unsubscribe</button>
+        </div>
+
+        <div class="slds-m-around_medium">
+            <strong>Message Received:</strong>
+            <p id="receivedMessage"></p>
+        </div>
+    </div>
+
+    <script>
+        // Subscription reference
+        let subscribeToMc = null;
+
+        // Message Channel
+        const SAMPLEMC = "{!$MessageChannel.SampleMessageChannel__c}";
+
+        function publishHandler() {
+            const data = document.getElementById('messageField').value;
+
+            const message = {
+                lmsData: {
+                    value: data
+                }
+            };
+
+            sforce.one.publish(SAMPLEMC, message);
+        }
+
+        function subscribeHandler() {
+            if (!subscribeToMc) {
+                subscribeToMc = sforce.one.subscribe(
+                    SAMPLEMC,
+                    msgHandler,
+                    { scope: "APPLICATION" }
+                );
+            }
+        }
+
+        function unsubscribeHandler() {
+            if (subscribeToMc) {
+                sforce.one.unsubscribe(subscribeToMc);
+                subscribeToMc = null;
+            }
+        }
+
+        function msgHandler(message) {
+            const messageReceived = document.getElementById('receivedMessage');
+            messageReceived.innerHTML =
+                message && message.lmsData ? message.lmsData.value : "No Message";
+        }
+    </script>
+</apex:page>

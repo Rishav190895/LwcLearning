@@ -1,0 +1,31 @@
+    <template>
+        <lightning-card title="Fet Picklist Value By Record Type">
+            <div class="slds-m-around_medium">
+            <template if:true={ratingoptions}>
+            <lightning-combobox
+                name="Rating"
+                label="Rating"
+                value={selectedRating}
+                placeholder="Select Rating"
+                options={ratingoptions}
+                onchange={handleChange} ></lightning-combobox>
+                <p>Selected value is: {selectedRating}</p>
+                </template>
+
+                <template if:true={indusrtyoptions}>
+                <lightning-combobox
+                name="Industry"
+                label="Industry"
+                value={selectedIndustry}
+                placeholder="Select Industry"
+                options={indusrtyoptions}
+                onchange={handleChange} ></lightning-combobox>
+                
+
+        <p>Selected value is: {selectedIndustry}</p>  
+        </template>
+        </div>
+                </lightning-card> 
+                </template>
+            
+

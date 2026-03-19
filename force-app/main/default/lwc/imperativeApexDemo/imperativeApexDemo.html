@@ -1,0 +1,16 @@
+<template>
+    <lightning-card title="Imperative Apex Demo">
+        <div class="slds-m-around_medium">
+            <lightning-button label="Click ME" variant="brand"
+             onclick={handleClick}></lightning-button>
+
+             <template if:true={accounts}>
+                <template for:each={accounts} for:item="account">
+                    <div key={account.Id}>
+                        <p><strong>Account Name : </strong>{account.Name}</p>
+                    </div>
+                </template>
+             </template>
+        </div>
+    </lightning-card>
+</template>

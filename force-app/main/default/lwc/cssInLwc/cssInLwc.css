@@ -1,0 +1,20 @@
+/*element,classes and pseudo class */
+p{
+    color:blue;
+    font-size: 30px;
+    
+}
+.demo{
+    color: green;
+    font-size: 20px;
+    border: 1px solid black;
+
+}
+.demo:hover{
+    color: aqua;
+    font-size: 30px;
+}
+.abc{
+    color: var(--lwc-brandAccessible);
+    border: 1px solid var(--lwc-colorBorder);
+}

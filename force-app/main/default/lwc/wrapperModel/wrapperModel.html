@@ -1,0 +1,21 @@
+<template>
+    <lightning-card title="Reuseable Model">
+        <div class="slds-p-around_medium">
+            <lightning-button label="Open" variant="brand" onclick={handleClick}></lightning-button>
+        </div>
+    </lightning-card>
+
+    <template if:true={isOpen}>
+        <c-model onclose={closeHandler}>
+            <h1 slot="title">Modal Header</h1>
+            <p>
+                Sit nulla est ex deserunt exercitation anim occaecat. Nostrud ullamco deserunt aute id consequat veniam incididunt duis in sint irure nisi. Mollit officia cillum Lorem ullamco minim nostrud elit officia tempor esse quis.
+                Dolor eiusmod sunt ex incididunt cillum quis nostrud velit duis sit officia. Lorem aliqua enim laboris do dolor eiusmod officia.
+            </p>
+            <div slot="footer">
+                <button class="slds-button slds-button_neutral" onclick={closeHandler}>Cancel</button> 
+                <button class="slds-button slds-button_brand" onclick={saveHandler}>Save</button> 
+            </div>
+        </c-model>
+    </template>
+</template>
