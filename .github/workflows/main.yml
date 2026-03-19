@@ -22,16 +22,24 @@ jobs:
         with:
           sfdx-auth-url: ${{ secrets.DEVHUB_URL }}
 
-      # Set default Dev Hub
+      # Set default DevHub org for us to create scratch orgs and package against 
       - name: Set Default DevHub
         run: sfdx force:config:set defaultdevhubusername=test-cip5cl81f6zt@example.com
 
-      # Sample step
-      - name: Run a one-line script
-        run: echo Hello, world!
+      # Create a scratch org to test our code
+      - name: Create Scratch Org
+        run: sfdx force:org:create -a actionBuild -d 1 -f config/project-scratch-def.json -s
 
-      # Sample multi-line step
-      - name: Run a multi-line script
-        run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
+      # Pushes all configuration to scratch org
+      - name: Pushing source
+        run: sfdx force:source:push -f
+
+      # Run all Apex tests in our Scratch org
+      - name: Running Apex Test
+        run: sfdx force:apex:test:run -l RunLocalTests -w 30
+
+      # Delete scratch org after successful build
+      - name: Deleteing Scratch Org
+        run: sfdx force:org:delete -p  
+
+     
