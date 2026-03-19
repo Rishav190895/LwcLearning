@@ -1,5 +1,3 @@
-# This is a basic workflow to help you get started with Actions
-
 name: SFDX Build
 
 on:
@@ -16,30 +14,71 @@ jobs:
       # Checkout repo
       - uses: actions/checkout@v2
 
-      # Install SFDX CLI and authenticate
+      # Install SFDX CLI
       - name: Salesforce SFDX CLI Setup
         uses: sfdx-actions/setup-sfdx@v1
         with:
           sfdx-auth-url: ${{ secrets.DEVHUB_URL }}
 
-      # Set default DevHub org for us to create scratch orgs and package against 
+      # Set default DevHub
       - name: Set Default DevHub
         run: sfdx force:config:set defaultdevhubusername=test-cip5cl81f6zt@example.com
 
-      # Create a scratch org to test our code
+      # Create scratch org
       - name: Create Scratch Org
         run: sfdx force:org:create -a actionBuild -d 1 -f config/project-scratch-def.json -s
 
-      # Pushes all configuration to scratch org
-      - name: Pushing source
-        run: sfdx force:source:push -f
+      # Push source
+      - name: Push Source
+        run: sfdx force:source:push
 
-      # Run all Apex tests in our Scratch org
-      - name: Running Apex Test
+      # Run Apex tests
+      - name: Run Apex Tests
         run: sfdx force:apex:test:run -l RunLocalTests -w 30
 
-      # Delete scratch org after successful build
-      - name: Deleteing Scratch Org
-        run: sfdx force:org:delete -p 
+      # Delete scratch org
+      - name: Delete Scratch Org
+        run: sfdx force:org:delete -p
 
-     
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Salesforce SFDX CLI Setup
+        uses: sfdx-actions/setup-sfdx@v1
+        with:
+          sfdx-auth-url: ${{ secrets.DEVHUB_URL }}
+
+      - name: Set Default DevHub
+        run: sfdx force:config:set defaultdevhubusername=test-cip5cl81f6zt@example.com
+
+      # Install jq (important)
+      - name: Install jq
+        run: sudo apt-get install jq
+
+      - name: Create Package Version
+        run: |
+          PACKAGE_VERSION_JSON=$(sfdx force:package:version:list --concise --released --packages FirstCoursePackage --json | jq '.result | sort_by(.MajorVersion, .MinorVersion, .PatchVersion) | last')
+
+          MAJOR_VERSION=$(jq -r '.MajorVersion' <<< $PACKAGE_VERSION_JSON)
+          MINOR_VERSION=$(jq -r '.MinorVersion' <<< $PACKAGE_VERSION_JSON)
+          PATCH_VERSION=$(jq -r '.PatchVersion' <<< $PACKAGE_VERSION_JSON)
+          BUILD_VERSION="NEXT"
+
+          if [ -z "$MAJOR_VERSION" ]; then MAJOR_VERSION=1; fi
+          if [ -z "$MINOR_VERSION" ]; then MINOR_VERSION=0; fi
+          if [ -z "$PATCH_VERSION" ]; then PATCH_VERSION=0; fi
+
+          VERSION_NUMBER="$MAJOR_VERSION.$MINOR_VERSION.$PATCH_VERSION.$BUILD_VERSION"
+
+          echo "Creating version: $VERSION_NUMBER"
+
+          sfdx force:package:version:create \
+            --package FirstCoursePackage \
+            --versionnumber $VERSION_NUMBER \
+            --installationkeybypass \
+            --wait 30 \
+            --json
